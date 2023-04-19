@@ -73,7 +73,8 @@ int main() {
 Use the built-in **dlog** static class which uses syslog internally. Then you can 
 see your logs by:
 - running `gnome-logs` gui if available.
-- using grep by running `cat /var/log/syslog | grep your_daemon_name`. 
+- using cat by running `cat /var/log/syslog | grep your_daemon_name`. 
+- using tail `tail -f /var/log/syslog` to show all logs or `tail -f /var/log/syslog | grep your_daemon_name`
 - opening the `/var/log/syslog` file in a text editor and find `your_daemon_name` (not recommended since syslog can be huge).
 
 ### TODO
