@@ -71,7 +71,10 @@ int main() {
 
 ### Logging
 Use the built-in **dlog** static class which uses syslog internally. Then you can 
-see your logs by opening the `/var/log/syslog` file or by opening `gnome-logs` gui. 
+see your logs by:
+- opening the `/var/log/syslog` file
+- using grep by running `cat syslog | grep your_daemon_name` 
+- running `gnome-logs` gui if available. 
 
 ### TODO
 - [ ] prevent against multiple instances via a lockfile
