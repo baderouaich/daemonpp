@@ -1,7 +1,7 @@
 ## daemonpp 
-Simple C++ lib to create Linux daemons.
+Simple C++ template for creating Linux daemons
 
-**(under development)**
+**(still under development)**
 
 ### What are daemon services/processes ?
 A dæmon is a program that runs silently in the background.<br>
@@ -85,6 +85,13 @@ see your logs by:
 - [ ] re-read configuration file upon SIGHUP
 - [ ] relay information via event logging, often done using e.g., syslog(3)
 
+## Configure your daemon steps
+## Install your daemon
+## Start your daemon
+## Stop your daemon
+## Restart your daemon
+## Check your daemon's status
+## Uninstall your daemon
 
 ### References
 - [Jan Schaumann - Advanced Programming in the UNIX Environment Week 10, Segment 1: Dæmon Processes](./guide-linux-daemons.pdf)

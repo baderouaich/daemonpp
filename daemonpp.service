@@ -1,0 +1,18 @@
+# Properties docs: https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+[Unit]
+Description=Daemon C++ library
+After=network.target
+
+[Service]
+# Configures the process start-up type for this service unit. One of simple, exec, forking, oneshot, dbus, notify or idle.
+Type=simple
+ExecStart=/usr/bin/daemonpp --config /etc/daemonpp/daemonpp.conf
+# Will trigger SIGHUP which will be catched by signal_handler and trigger the on_restart callback.
+ExecReload=/bin/kill -HUP $MAINPID
+User=root
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=daemonpp
+
+[Install]
+WantedBy=multi-user.target

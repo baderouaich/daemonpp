@@ -1,60 +1,20 @@
-cmake_minimum_required(VERSION 3.24)
-project(daemonpp)
+cmake_minimum_required(VERSION 3.10)
+project(daemonpp VERSION "0.0.1" DESCRIPTION "Simple C++ template for creating Linux daemons" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CXX_FLAGS "-ggdb -Wall -Wextra -pedantic -O0")
+elseif( CMAKE_BUILD_TYPE STREQUAL "Release" )
+    set(CMAKE_CXX_FLAGS "-DNDEBUG -Wall -Wextra -pedantic -O3")
+endif()
 
-# Directory with configuration files
-set(DAEMON_CONF_DIR "/etc/daemon")
+add_executable(${PROJECT_NAME} main.cpp daemon.hpp dlog.hpp)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
 
-# Directory with systemd unit files
-set(SYSTEMD_UNIT_DIR "/usr/lib/systemd/system/")
+# Install the config file
+install(FILES ${CMAKE_SOURCE_DIR}/daemonpp.conf DESTINATION /etc/daemonpp/)
 
-# Default directory for log file
-set(DAEMON_LOG_DIR "/var/log/daemon")
+# Install the systemd file
+install(FILES ${CMAKE_SOURCE_DIR}/daemonpp.service DESTINATION /etc/systemd/system/)
 
-# Default directory for PID file
-set(DAEMON_PID_DIR "/run/daemon")
-
-add_executable(daemonpp main.cpp daemon.hpp dlog.hpp)
-
-# Default directory for PID file
-set (DAEMON_PID_DIR "/run/daemon")
-
-# Macro for installing configuration files
-function(install_conf src dest)
-    if(NOT IS_ABSOLUTE "${src}")
-        set(src "${CMAKE_CURRENT_SOURCE_DIR}/${src}")
-    endif()
-    get_filename_component(src_name "${src}" NAME)
-    if (NOT IS_ABSOLUTE "${dest}")
-        set(dest "${CMAKE_INSTALL_PREFIX}/${dest}")
-    endif()
-    install(CODE "
-    if(NOT EXISTS \"\$ENV{DESTDIR}${dest}/${src_name}\")
-      #file(INSTALL \"${src}\" DESTINATION \"${dest}\")
-      message(STATUS \"Installing: \$ENV{DESTDIR}${dest}/${src_name}\")
-      execute_process(COMMAND \${CMAKE_COMMAND} -E copy \"${src}\"
-                      \"\$ENV{DESTDIR}${dest}/${src_name}\"
-                      RESULT_VARIABLE copy_result
-                      ERROR_VARIABLE error_output)
-      if(copy_result)
-        message(FATAL_ERROR \${error_output})
-      endif()
-    else()
-      message(STATUS \"Skipping  : \$ENV{DESTDIR}${dest}/${src_name}\")
-    endif()
-  ")
-endfunction(install_conf)
-
-# Install configuration file
-install_conf (./daemon.conf ${DAEMON_CONF_DIR})
-
-# Install systemd unit files
-install_conf (./simple-daemon.service ${SYSTEMD_UNIT_DIR})
-install_conf (./forking-daemon.service ${SYSTEMD_UNIT_DIR})
-
-# Create empty directory for default log file
-install(DIRECTORY DESTINATION ${DAEMON_LOG_DIR})
-
-# Create empty directory for default PID file
-install(DIRECTORY DESTINATION ${DAEMON_PID_DIR})
+# Install the binary program
+install(TARGETS ${PROJECT_NAME} DESTINATION /usr/bin/)

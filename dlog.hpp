@@ -27,7 +27,7 @@ namespace daemonpp {
          * @param priority
          */
         static void log(const std::string &message, std::int32_t priority) {
-          syslog(priority, "[%s] [%s]: %s", m_daemon_name.c_str(), priority_str(priority).c_str(), message.c_str());
+          syslog(priority, "%s", message.c_str());
         }
 
         /**

@@ -8,7 +8,7 @@ public:
       /// Runs once after daemon starts:
       /// Initialize your code here...
 
-      dlog::info("Started daemon "+ get_name() + " on working dir " + get_cwd());
+      dlog::info("on_start");
     }
 
     void on_update() override {
@@ -31,12 +31,16 @@ public:
       dlog::info("on_exit");
     }
 
+    void on_restart() override {
+      dlog::info("on_restart");
+    }
+
 private:
     int counter = 0;
 };
 
 
-int main() {
+int main(int argc, const char* argv[]) {
   my_simple_daemon dmn;
   dmn.set_name("my_simple_daemon");
   dmn.set_update_duration(std::chrono::seconds(3));
@@ -44,39 +48,3 @@ int main() {
   dmn.run();
   return 0;
 }
-
-
-
-
-
-
-
-#if 0
-#include <iostream>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <syslog.h>
-#include <stdlib.h>
-#include <unistd.h> // daemon()
-#include <signal.h>
-int main() {
-
-  /* It is also possible to use glibc function deamon()
-		 * at this point, but it is useful to customize your daemon. */
-  daemon(0, 0);
-
-
-  while (true)
-  {
-    //TODO: Insert daemon code here.
-    syslog (LOG_NOTICE, "Sample daemon started.");
-    sleep (10);
-    break;
-  }
-
-  syslog (LOG_NOTICE, "Sample daemon terminated.");
-  closelog();
-  return 0;
-}
-#endif
-// todo provide a daemon main
