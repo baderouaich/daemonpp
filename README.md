@@ -91,14 +91,14 @@ git clone https://github.com/baderouaich/daemonpp my_daemon
 2. Your project structure will be like this:
     ```text
     my_daemon
-            ├── include/            # include files contains daemonpp single header files
-            ├── examples/           # example daemon projects to inspire from
-            ├── daemonpp.conf       # daemon config file (required)
-            ├── daemonpp.service    # daemon service file for systemd (required)
-            ├── daemonpp.cpp        # daemonpp.cpp simple daemon example
-            ├── CMakeLists.txt      # CMake project file 
-            ├── LICENSE
-            └── README.md
+    ├── include/            # include files contains daemonpp single header files
+    ├── examples/           # example daemon projects to inspire from
+    ├── daemonpp.conf       # daemon config file (required)
+    ├── daemonpp.service    # daemon service file for systemd (required)
+    ├── daemonpp.cpp        # daemonpp.cpp simple daemon example
+    ├── CMakeLists.txt      # CMake project file 
+    ├── LICENSE
+    └── README.md
     ```
 * 2.1 Update project name according to your project name in the [CMakeLists.txt](CMakeLists.txt) file
     ```cmake
@@ -236,6 +236,7 @@ see your logs by:
 - [ ] allow for easy determination of PID via a pidfile
 - [ ] include a system initialization script (for /etc/rc.d/, /etc/init.d/, systemd, …)
 - [ ] configuration file convention /etc/name.conf
+- [ ] handle other Linux distributions that don't use systemd such as RedHat 4/5/6 or CentOS tha use init scripts
 
 ### Features and bugs
 If you face any problems feel free to open an issue at the [issue tracker][tracker]. If you feel the library is missing a feature, please raise a ticket on Github. Pull request are also welcome.
