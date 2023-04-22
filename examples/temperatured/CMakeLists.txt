@@ -10,10 +10,6 @@ endif()
 include_directories(../../include)
 add_executable(${PROJECT_NAME} temperatured.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-        X11
-        Xfixes
-)
 
 # Install the config file .conf
 install(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.conf DESTINATION /etc/${PROJECT_NAME}/)
