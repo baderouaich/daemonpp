@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(temperatured VERSION "0.0.1" DESCRIPTION "Daemon that monitors clipboard" LANGUAGES CXX)
+project(temperatured VERSION "0.0.1" DESCRIPTION "Daemon that monitors cpu temperature each second" LANGUAGES CXX)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "-ggdb -Wall -Wextra -pedantic -O0")
