@@ -1,4 +1,4 @@
-#include "daemon.hpp"
+#include "include/daemon.hpp"
 using namespace daemonpp;
 
 class my_simple_daemon : public daemon
