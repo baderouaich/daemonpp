@@ -244,4 +244,4 @@ If you face any problems feel free to open an issue at the [issue tracker][track
 [tracker]: https://github.com/baderouaich/daemonpp/issues
 
 ### References
-- [Jan Schaumann - Advanced Programming in the UNIX Environment Week 10, Segment 1: Dæmon Processes](./guide-linux-daemons.pdf)
+- [Jan Schaumann - Advanced Programming in the UNIX Environment Week 10, Segment 1: Dæmon Processes](https://www.youtube.com/watch?v=YbYQqVMv7b8f)
