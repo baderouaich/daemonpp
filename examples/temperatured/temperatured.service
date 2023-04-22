@@ -1,0 +1,24 @@
+# Properties docs: https://www.freedesktop.org/software/systemd/man/systemd.service.html
+[Unit]
+Description=temperature monitor
+After=network.target
+
+[Service]
+# Configures the proess start-up type for this service unit. One of simple, exec, forking, oneshot, dbus, notify or idle.
+# https://unix.stackexchange.com/questions/733890/systemd-service-unit-restart-on-failure-doesnt-restart-daemon
+Type=forking
+# when systemctrl start is called
+ExecStart=/usr/bin/temperatured --config /etc/temperatured/temperatured.conf
+# when systemctrl reload my_daemon (for reloading of the service's configuration) it will trigger SIGHUP
+# which will be caught by signal_handler and trigger the on_reload callback.
+ExecReload=/bin/kill -s SIGHUP $MAINPID
+# when systemctrl stop my_daemon called: Will trigger SIGTERM which will be caught by signal_handler
+# and trigger the on_stop callback.
+ExecStop=/bin/kill -s SIGTERM $MAINPID
+User=root
+StandardError=syslog
+SyslogIdentifier=temperatured
+
+[Install]
+# Start after boot
+WantedBy=multi-user.target
