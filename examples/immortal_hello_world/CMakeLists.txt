@@ -12,10 +12,10 @@ add_executable(${PROJECT_NAME} immortal_hello_world.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11)
 
 # Install the config file .conf
-install(FILES ${CMAKE_SOURCE_DIR}/immortal_hello_world.conf DESTINATION /etc/immortal_hello_world/)
+install(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.conf DESTINATION /etc/${PROJECT_NAME}/)
 
 # Install the systemd file .service
-install(FILES ${CMAKE_SOURCE_DIR}/immortal_hello_world.service DESTINATION /etc/systemd/system/)
+install(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.service DESTINATION /etc/systemd/system/)
 
 # Install the binary program
 install(TARGETS ${PROJECT_NAME} DESTINATION /usr/bin/)
