@@ -70,14 +70,6 @@ namespace daemonpp {
         }
 
 
-//        // todo, what if the user wants to stop the daemon immediately?
-//        void immediate_exit(){
-//          m_is_running.store(false, std::memory_order::seq_cst);
-//          on_exit();
-//          // note that calling std::exit() inside the run function will not call dtor.
-//          ~daemon():
-//        }
-
         ~daemon() {
           dlog::shutdown();
           // Terminate the child process when the daemon completes (loop stopped)
