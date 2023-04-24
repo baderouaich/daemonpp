@@ -1,4 +1,5 @@
 #include "daemon.hpp"
+#include "portable-file-dialogs.h"
 using namespace daemonpp;
 using namespace std::chrono_literals;
 
@@ -46,7 +47,7 @@ public:
 
     void on_reload(const dconfig& cfg) override {
       /// Runs once after your daemon is reloaded
-      /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctrl reload my_daemon`
+      /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctl reload my_daemon`
       dlog::info("on_reload: temperatured reloaded: " + cfg.get("version"));
     }
 
@@ -100,7 +101,7 @@ private:
 int main(int argc, const char* argv[]) {
   temperatured dmn;
   dmn.set_name("temperatured");
-  dmn.set_update_duration(1s);
+  dmn.set_update_duration(10s);
   dmn.set_cwd("/tmp");
   dmn.run(argc, argv);
   return 0;

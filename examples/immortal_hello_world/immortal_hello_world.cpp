@@ -27,7 +27,7 @@ public:
 
     void on_reload(const dconfig& cfg) override {
       /// Runs once after your daemon is reloaded
-      /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctrl reload my_daemon`
+      /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctl reload my_daemon`
 
       dlog::info("on_reload: immortal_hello_world reloaded: " + cfg.get("version"));
     }
