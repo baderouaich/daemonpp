@@ -136,8 +136,8 @@ git clone https://github.com/baderouaich/daemonpp my_daemon
 * 2.4 Update your `my_daemon.conf` config file accordingly (optional)
     ```toml
     # here you can put your daemon configuration which you can get in the on_start and on_reload callbacks.
-    name="my_daemon"
-    version="0.0.1"
+    name=my_daemon
+    version=0.0.1
     ```
   
 3. Now your project structure will look like this:
