@@ -13,7 +13,6 @@ namespace daemonpp {
     public:
         /**
          * initialize the logger
-         * @note: must be called after daemonize().
          * @param daemon_name
          */
         static void init(const std::string &daemon_name) {
@@ -105,7 +104,7 @@ namespace daemonpp {
       static std::string priority_str(std::int32_t priority)
       {
         switch (priority) {
-          case LOG_EMERG: return "notice";
+          case LOG_EMERG: return "emergency";
           case LOG_ALERT: return "alert";
           case LOG_CRIT: return "critical";
           case LOG_ERR: return "error";
