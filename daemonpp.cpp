@@ -1,4 +1,4 @@
-#include "include/daemon.hpp"
+#include "daemon.hpp"
 using namespace daemonpp;
 
 class my_simple_daemon : public daemon
@@ -30,7 +30,7 @@ public:
 
     void on_reload(const dconfig& cfg) override {
       /// Called once after your daemon's config or service files are updated
-      /// then reloaded with `$ systemctrl reload my_daemon`
+      /// then reloaded with `$ systemctl reload my_daemon`
       dlog::info("on_reload: new daemon version from updated config: " + cfg.get("version"));
     }
 
