@@ -10,8 +10,8 @@ public:
       dlog::info("on_start: temperatured started!");
 
       // Note that our current working directory is pointed at /tmp (see main function)
-      // this file will be created at /tm/temperatured_history.txt
-      temperature_history_file.open("temperatured_history.txt", std::ios::app);
+      // this file will be created at /tmp/temperatured.txt
+      temperature_history_file.open("temperatured.txt", std::ios::app);
     }
 
     void on_update() override {

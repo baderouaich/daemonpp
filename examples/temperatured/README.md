@@ -20,7 +20,7 @@ systemctl [start|stop] temperatured
 
 ## Monitor temperatured output:
 ```bash
-tail -f /tmp/temperatured_history.txt
+tail -f /tmp/temperatured.txt
 ```
 
 ## Reload Daemon after config files updated
