@@ -17,7 +17,8 @@
 namespace daemonpp
 {
   struct dconfig {
-      
+      std::map<std::string, std::string> values;
+
       std::string get(const std::string& key) const {
         auto it = values.find(key);
         if(it != values.end())
@@ -37,8 +38,7 @@ namespace daemonpp
               }
               return parts;
           };
-          auto trim = [](std::string &s)
-          {
+          auto trim = [](std::string &s) {
             s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
                 return !std::isspace(ch);
             }));
@@ -50,21 +50,19 @@ namespace daemonpp
           std::ifstream ifs{filename};
           std::string line;
           while(std::getline(ifs, line)){
-              // read config into values
-              if(line.empty()) continue;
-              trim(line);
-              if(line[0] == '#') continue; // skip comments
-              auto parts = split(line, '=');
-              std::string key = parts[0];
-              std::string value = parts[1];
-              trim(key);
-              trim(value);
-              cfg.values[key] = value;
+            trim(line);
+            if(line.empty()) continue;
+            if(line[0] == '#') continue; // skip comments
+            auto parts = split(line, '=');
+            std::string key = parts[0];
+            std::string value = parts[1];
+            trim(key);
+            trim(value);
+            cfg.values[key] = value;
           }
           ifs.close();
           return cfg;
       }
-      std::map<std::string, std::string> values;
-      std::string config_file;
+
    };
 } 
