@@ -64,12 +64,12 @@ namespace daemonpp {
               if(i + 1 < argc)
                   m_config_file = argv[i + 1];
               else
-                  dlog::error("Missing config file. did you forget to specify a config file in your .service file?");
+                  dlog::error("Missing config file. Did you forget to specify a config file in your .service file's ExecStart ?");
               break;
             }
           }
 
-          // Daemonize this program by forking type.
+          // Daemonize this program by forking parent process.
           daemonize();
 
           // Mark as running (better to have it before on_start() as user may call stop() inside on_start()).
@@ -101,12 +101,12 @@ namespace daemonpp {
           std::exit(m_exit_code);
         }
 
-    protected:
+    protected: // Callbacks
         /**
          * @brief Called once on daemon starts
          * @scenarios:
          *  - when systems starts
-         *  - when your run `$ systemctrl start your_daemon` manually
+         *  - when your run `$ systemctl start your_daemon` manually
          * @param cfg: Installed daemon config file
          * Initialize your code here...
          */
@@ -121,8 +121,8 @@ namespace daemonpp {
         /**
          * @brief Called once before daemon is about to exit.
          * @scenarios:
-         *  - when you call stop()
-         *  - when you run `$ systemctrl stop your_daemon` manually
+         *  - when you call stop(exit_code)
+         *  - when you run `$ systemctl stop your_daemon` manually
          *  - when the system kills your daemon for some reason
          * Cleanup your code here...
          */
@@ -131,7 +131,7 @@ namespace daemonpp {
         /**
          * @brief Called once when daemon's config or service files are updated.
          * @scenarios:
-         *  - when you run `$ systemctrl daemon-reload` after you have changed your .conf or .service files (after reinstalling your daemon with `$ sudo make install` for example)
+         *  - when you run `$ systemctl daemon-reload` after you have changed your .conf or .service files (after reinstalling your daemon with `$ sudo make install` for example)
          * Reinitialize your code here...
          */
         virtual void on_reload(const dconfig& cfg) = 0;
@@ -211,7 +211,7 @@ namespace daemonpp {
 
           // Initialize syslog for this daemon, here it's a good place to do so.
           dlog::init(m_name);
-          dlog::notice("Daemon '" + m_name + "' started successfully.");
+          //dlog::notice("Daemon '" + m_name + "' started successfully.");
 
           // On success: The child process becomes session leader. Generate a session ID for the child process
           m_sid = setsid();
@@ -252,8 +252,8 @@ namespace daemonpp {
         std::string m_cwd;
         std::chrono::high_resolution_clock::duration m_update_duration;
         std::atomic<bool> m_is_running;
-        mutable std::condition_variable m_update_cv;
-        mutable std::mutex m_mutex;
+        std::condition_variable m_update_cv;
+        std::mutex m_mutex;
         std::int32_t m_exit_code;
     };
    daemon* daemon::instance = nullptr;
