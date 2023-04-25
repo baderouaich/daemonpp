@@ -1,0 +1,4 @@
+# here you can have your daemon configuration
+name=@PROJECT_NAME@
+version=@PROJECT_VERSION@
+description=@PROJECT_DESCRIPTION@

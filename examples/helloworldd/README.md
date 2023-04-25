@@ -1,8 +1,8 @@
-## Immortal Hello World Daemon
+## Hello World Daemon
 This daemon will log "Hello, World" to syslog every minute, forever, as long as your system is on.
-It will start when your system starts, and stops when your system stops.
+[It will start when your system starts, and stops when your system stops](#enabledisable-daemon-with-system-startup).
 
-## Install
+## Build & Install
 ```bash 
 mkdir build && cd build 
 cmake .. -DCMAKE_BUILD_TYPE=Release

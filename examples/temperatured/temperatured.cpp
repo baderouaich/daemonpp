@@ -1,5 +1,4 @@
 #include "daemon.hpp"
-#include "portable-file-dialogs.h"
 using namespace daemonpp;
 using namespace std::chrono_literals;
 
@@ -7,6 +6,8 @@ class temperatured : public daemon
 {
 public:
     void on_start(const dconfig& cfg) override {
+      /// Called once after daemon starts:
+      /// Initialize your code here...
       dlog::info("on_start: temperatured started!");
 
       // Note that our current working directory is pointed at /tmp (see main function)
@@ -15,7 +16,7 @@ public:
     }
 
     void on_update() override {
-      /// Runs every DURATION set in set_update_duration()... (which we set to 1s)
+      /// Called every DURATION set in set_update_duration()...
       /// Update your code here...
 
       double curr_temperature_celsius = get_cpu_temperature();
@@ -38,7 +39,7 @@ public:
     }
 
     void on_stop() override {
-      /// Runs once before daemon is about to exit.
+      /// Called once before daemon is about to exit.
       /// Cleanup your code here...
       if(temperature_history_file.is_open())
         temperature_history_file.close();
@@ -46,8 +47,8 @@ public:
     }
 
     void on_reload(const dconfig& cfg) override {
-      /// Runs once after your daemon is reloaded
-      /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctl reload my_daemon`
+      /// Called once after your daemon's config or service files are updated
+      /// then reloaded with `$ systemctl reload my_daemon`
       dlog::info("on_reload: temperatured reloaded: " + cfg.get("version"));
     }
 
@@ -101,7 +102,7 @@ private:
 int main(int argc, const char* argv[]) {
   temperatured dmn;
   dmn.set_name("temperatured");
-  dmn.set_update_duration(10s);
+  dmn.set_update_duration(1s);
   dmn.set_cwd("/tmp");
   dmn.run(argc, argv);
   return 0;

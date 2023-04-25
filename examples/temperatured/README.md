@@ -1,7 +1,7 @@
 ## Temperature Monitor Daemon
 This daemon will monitor computer temperature every second and logs to a file in /tmp/temperatured.txt
 
-## Install
+## Build and Install
 ```bash 
 mkdir build && cd build 
 cmake .. -DCMAKE_BUILD_TYPE=Release

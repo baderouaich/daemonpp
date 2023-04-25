@@ -1,14 +1,14 @@
 #include "daemon.hpp"
 using namespace daemonpp;
 
-class immortal_hello_world : public daemon
+class helloworldd : public daemon
 {
 public:
     void on_start(const dconfig& cfg) override {
       /// Runs once after daemon starts:
       /// Initialize your code here...
 
-      dlog::info("on_start: immortal_hello_world version " + cfg.get("version") + " started!");
+      dlog::info("on_start: helloworldd version " + cfg.get("version") + " started!");
     }
 
     void on_update() override {
@@ -22,21 +22,21 @@ public:
       /// Runs once before daemon is about to exit.
       /// Cleanup your code here...
 
-      dlog::info("on_stop: immortal_hello_world stopped.");
+      dlog::info("on_stop: helloworldd stopped.");
     }
 
     void on_reload(const dconfig& cfg) override {
       /// Runs once after your daemon is reloaded
       /// Runs once after your daemon's config or service files are updated then reloaded with `$ systemctl reload my_daemon`
 
-      dlog::info("on_reload: immortal_hello_world reloaded: " + cfg.get("version"));
+      dlog::info("on_reload: helloworldd reloaded: " + cfg.get("version"));
     }
 };
 
 
 int main(int argc, const char* argv[]) {
-  immortal_hello_world dmn;
-  dmn.set_name("immortal_hello_world");
+  helloworldd dmn;
+  dmn.set_name("helloworldd");
   dmn.set_update_duration(std::chrono::minutes(1));
   dmn.set_cwd("/");
   dmn.run(argc, argv);
