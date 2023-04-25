@@ -11,6 +11,16 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_11) # update your C++ version here if you like
 
+# Configure .service file
+configure_file(${CMAKE_SOURCE_DIR}/systemd/daemonpp.service.in ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.service)
+
+# Configure .conf file
+configure_file(${CMAKE_SOURCE_DIR}/systemd/daemonpp.conf.in ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.conf)
+
+# Rename default daemonpp.cpp to PROJECT_NAME.cpp
+if(EXISTS ${CMAKE_SOURCE_DIR}/daemonpp.cpp)
+    file(RENAME ${CMAKE_SOURCE_DIR}/daemonpp.cpp ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.cpp)
+endif()
 # Install the config file .conf
 install(FILES ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}.conf DESTINATION /etc/${PROJECT_NAME}/)
 
