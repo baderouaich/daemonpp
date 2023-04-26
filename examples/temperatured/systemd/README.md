@@ -1,7 +1,7 @@
 Linux systems that use systemd for managing services, .service files are typically placed in the /lib/systemd/system/ directory or the /etc/systemd/system/ directory. The .conf files may be placed in a similar directory, such as /etc/my-daemon/.
 
 ### .service
-```unit file (systemd)
+```ini
 # Properties docs: https://www.freedesktop.org/software/systemd/man/systemd.service.html
 [Unit]
 Description=Simple C++ template example for creating Linux daemons
@@ -30,7 +30,7 @@ WantedBy=multi-user.target
 
 
 ### .conf
-```yaml
+```ini
 # here you can have your daemon configuration
 name=daemonpp
 version=0.0.1

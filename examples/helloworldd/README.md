@@ -11,35 +11,35 @@ sudo make install
 
 ## Enable/Disable Daemon with system startup
 ```bash 
-systemctl [enable|disable] immortal_hello_world
+systemctl [enable|disable] helloworldd
 ```
 
 ## Start/Stop Daemon manually
 ```bash 
-systemctl [start|stop] immortal_hello_world
+systemctl [start|stop] helloworldd
 ```
 
 ## Reload Daemon after config files updated
 ```bash 
-systemctl reload immortal_hello_world
+systemctl reload helloworldd
 ```
 
 ## Restart Daemon
 ```bash 
-systemctl restart immortal_hello_world
+systemctl restart helloworldd
 ```
-> Equivalent to `stop systemctl stop immortal_hello_world && systemctl start immortal_hello_world` 
+> Equivalent to `stop systemctl stop helloworldd && systemctl start helloworldd` 
 
 ## Uninstall daemon 
 ```bash
 # graceful stop daemon
-systemctl stop immortal_hello_world
+systemctl stop helloworldd
 # disable daemon with system startup
-systemctl disable immortal_hello_world
+systemctl disable helloworldd
 # remove daemon binary and config files
 sudo make uninstall
 ```
 > You can also manually remove files after you stop your daemon using: 
 > ```bash
-> rm -rf /etc/immortal_hello_world/immortal_hello_world.conf /etc/systemd/system/immortal_hello_world.service /usr/bin/immortal_hello_world
+> rm -rf /etc/helloworldd/helloworldd.conf /etc/systemd/system/helloworldd.service /usr/bin/helloworldd
 > ```
