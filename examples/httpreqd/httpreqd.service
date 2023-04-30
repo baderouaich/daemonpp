@@ -1,0 +1,18 @@
+# Properties docs: https://www.freedesktop.org/software/systemd/man/systemd.service.html
+[Unit]
+Description=This Daemon performs HTTP JSON request every 1 minute
+After=network.target
+
+[Service]
+Type=forking
+# So cpr can find system libs it needs
+Environment="LD_LIBRARY_PATH=/usr/local/lib"
+ExecStart=/usr/bin/httpreqd --config /etc/httpreqd/httpreqd.conf
+ExecReload=/bin/kill -s SIGHUP $MAINPID
+ExecStop=/bin/kill -s SIGTERM $MAINPID
+User=root
+StandardError=syslog
+SyslogIdentifier=httpreqd
+
+[Install]
+WantedBy=multi-user.target
