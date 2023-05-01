@@ -16,7 +16,7 @@ include_directories(${CPR_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/lib/json/include)
 ####################################################
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(../../include)
 add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20) # update your C++ version here if you like
 target_link_libraries(${PROJECT_NAME} PRIVATE
