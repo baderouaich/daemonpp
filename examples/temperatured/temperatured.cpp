@@ -8,34 +8,34 @@ public:
     void on_start(const dconfig& cfg) override {
       /// Called once after daemon starts:
       /// Initialize your code here...
-      dlog::info("on_start: temperatured started!");
+      dlog::info("on_start: temperatured started: version=" + cfg.get("version"));
 
       // Note that our current working directory is pointed at /tmp (see main function)
       // this file will be created at /tmp/temperatured.txt
       temperature_history_file.open("temperatured.txt", std::ios::app);
+      temperature_history_file << std::fixed << std::setprecision(2);
     }
 
     void on_update() override {
       /// Called every DURATION set in set_update_duration()...
       /// Update your code here...
 
-      double curr_temperature_celsius = get_cpu_temperature();
-      temperature_history_file << '[' << get_current_date_time() << "]: " << curr_temperature_celsius << "°C ";
-      if(is_between(curr_temperature_celsius, 10.0, 40.0))
-        temperature_history_file << "(Cool)";
-      else if(is_between(curr_temperature_celsius, 41.0, 65.0))
-        temperature_history_file << "(Normal)";
-      else if(is_between(curr_temperature_celsius, 66.0, 70.0))
-        temperature_history_file << "(Average)";
-      else if(is_between(curr_temperature_celsius, 71.0, 80.0))
-        temperature_history_file << "(High)";
-      else if(is_between(curr_temperature_celsius, 81.0, 100.0))
-        temperature_history_file << "(Cooking)";
-      else
-        temperature_history_file << "(Unknown)";
-
+      const double temp = get_cpu_temperature();
+      temperature_history_file << '[' << get_current_date_time() << "] " << temp << "°C ";
+      if (temp < -10.0) {
+        temperature_history_file << "(Frozen)";
+      } else if (temp > 100.0) {
+        temperature_history_file << "(Burning)";
+      } else {
+        for (const auto &[range, status]: statuses) {
+          const auto &[min_c, max_c] = range;
+          if (is_between(temp, min_c, max_c)) {
+            temperature_history_file << '(' << status << ')' << std::endl;
+            break;
+          }
+        }
+      }
       temperature_history_file << std::endl;
-
     }
 
     void on_stop() override {
@@ -49,7 +49,7 @@ public:
     void on_reload(const dconfig& cfg) override {
       /// Called once after your daemon's config or service files are updated
       /// then reloaded with `$ systemctl reload my_daemon`
-      dlog::info("on_reload: temperatured reloaded: " + cfg.get("version"));
+      dlog::info("on_reload: temperatured reloaded: version=" + cfg.get("version"));
     }
 
 private:
@@ -96,6 +96,15 @@ private:
 
 private:
     std::ofstream temperature_history_file;
+    const std::map<std::pair<double, double>, std::string> statuses = {
+      {{-10.0, 10.0}, "Cold"},
+      {{10.1, 25.0}, "Cool"},
+      {{25.1, 35.0}, "Moderate"},
+      {{35.1, 45.0}, "Warm"},
+      {{45.1, 60.0}, "Hot"},
+      {{60.1, 80.0}, "Very Hot"},
+      {{80.1, 100.0}, "Scorching"},
+    };
 };
 
 
